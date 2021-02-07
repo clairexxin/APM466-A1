@@ -69,8 +69,6 @@ ytm_matrix_md = ytm_matrix
 ytm_matrix_md[,4] <- est_ytm_b4
 ytm_matrix_md[,6] <- est_ytm_b6
 
-print(ytm_matrix_md)
-
 maturity_date_md <- c("2021-03-01","2021-09-01","2022-03-01","2022-09-01","2023-03-01","2023-09-01","2024-03-01","2024-09-01","2025-03-01","2025-09-01","2026-03-01")
 
 year_frac_md = year_frac
@@ -129,79 +127,79 @@ cf_11 = c(0.125, 0.125, 0.125, 0.125, 0.125, 0.125,0.125, 0.125, 0.125,0.125, 10
 
 # calculate spot curve
 
-raw_spot <- c()
 raw_spot_matrix <- matrix(nrow = 10, ncol = 11)
 
 for (i in 1:10) {
-t_1 = as.numeric(year_frac[i,1])
-sf_1 = function(x) as.numeric(dp[i,1]) - cf_1[1]*exp(-(t_1)*x)
-s_1 = uniroot(sf_1,c(0,1))$root
-s_1
-
-t_2 = as.numeric(year_frac[i,2])
-sf_2 = function(x) as.numeric(dp[i,2]) - cf_2[1]*exp(-(t_2-0.5*1)*s_1)- cf_2[2]*exp(-(t_2)*x)
-s_2 = uniroot(sf_2,c(0,1))$root
-s_2
-
-t_3 = as.numeric(year_frac[i,3])
-sf_3 = function(x) as.numeric(dp[i,3]) - cf_3[1]*exp(-(t_3-0.5*2)*s_1)- cf_3[2]*exp(-(t_3-0.5*1)*s_2)- cf_3[3]*exp(-(t_3)*x)
-s_3 = uniroot(sf_3,c(0,1))$root
-s_3
-
-t_4 = as.numeric(year_frac[i,4])
-sf_4 = function(x) as.numeric(dp[i,4]) - cf_4[1]*exp(-(t_4-0.5*3)*s_1)- cf_4[2]*exp(-(t_4-0.5*2)*s_2)- cf_4[3]*exp(-(t_4-0.5*1)*s_3) - cf_4[4]*exp(-(t_4)*x)
-s_4 = uniroot(sf_4,c(0,1))$root
-s_4
-
-t_5 = as.numeric(year_frac[i,5])
-sf_5 = function(x) as.numeric(dp[i,5]) - cf_5[1]*exp(-(t_5-0.5*4)*s_1)- cf_5[2]*exp(-(t_5-0.5*3)*s_2)- cf_5[3]*exp(-(t_5-0.5*2)*s_3) - cf_5[4]*exp(-(t_5-0.5*1)*s_4) - 
-                                         cf_5[5]*exp(-(t_5)*x)
-s_5 = uniroot(sf_5,c(0,1))$root
-s_5
-
-t_6 = as.numeric(year_frac[i,6])
-sf_6 = function(x) as.numeric(dp[i,6]) - cf_6[1]*exp(-(t_6-0.5*4)*s_1)- cf_6[2]*exp(-(t_6-0.5*3)*s_2)- cf_6[3]*exp(-(t_6-0.5*2)*s_3) - cf_6[4]*exp(-(t_6-0.5*1)*s_4) - 
-                                         cf_6[5]*exp(-(t_6)*x)
-s_6 = uniroot(sf_6,c(0,1))$root
-s_6
-
-t_7 = as.numeric(year_frac[i,7])
-sf_7 = function(x) as.numeric(dp[i,7]) - cf_7[1]*exp(-(t_7-0.5*6)*s_1) - cf_7[2]*exp(-(t_7-0.5*5)*s_2) - cf_7[3]*exp(-(t_7-0.5*4)*s_3) - cf_7[4]*exp(-(t_7-0.5*3)*s_4)- 
-                                         cf_7[5]*exp(-(t_7-0.5*2)*s_5)- cf_7[6]*exp(-(t_7-0.5*1)*s_6) - cf_7[7]*exp(-(t_7)*x)
-s_7 = uniroot(sf_7,c(0,1))$root
-s_7
-
-t_8 = as.numeric(year_frac[i,8])
-sf_8 = function(x) as.numeric(dp[i,8]) - cf_8[1]*exp(-(t_8-0.5*7)*s_1) - cf_8[2]*exp(-(t_8-0.5*6)*s_2) - cf_8[3]*exp(-(t_8-0.5*5)*s_3) - cf_8[4]*exp(-(t_8-0.5*4)*s_4) - 
-                                         cf_8[5]*exp(-(t_8-0.5*3)*s_5) - cf_8[6]*exp(-(t_8-0.5*2)*s_6) - cf_8[7]*exp(-(t_8-0.5*1)*s_7) - cf_8[8]*exp(-(t_8)*x)
-s_8 = uniroot(sf_8,c(0,1))$root
-s_8
-
-t_9 = as.numeric(year_frac[i,9])
-sf_9 = function(x) as.numeric(dp[i,9]) - cf_9[1]*exp(-(t_9-0.5*8)*s_1) - cf_9[2]*exp(-(t_9-0.5*7)*s_2) - cf_9[3]*exp(-(t_9-0.5*6)*s_3) - cf_9[4]*exp(-(t_9-0.5*5)*s_4) - 
-                                         cf_9[5]*exp(-(t_9-0.5*4)*s_5) - cf_9[6]*exp(-(t_9-0.5*3)*s_6) - cf_9[7]*exp(-(t_9-0.5*2)*s_7) - cf_9[8]*exp(-(t_9-0.5*1)*s_8) - 
-                                         cf_9[9]*exp(-(t_9)*x)
-s_9 = uniroot(sf_9,c(0,1))$root
-s_9
-
-t_10 = as.numeric(year_frac[i,10])
-sf_10 = function(x) as.numeric(dp[i,10]) - cf_10[1]*exp(-(t_10-0.5*9)*s_1) - cf_10[2]*exp(-(t_10-0.5*8)*s_2) - cf_10[3]*exp(-(t_10-0.5*7)*s_3) - cf_10[4]*exp(-(t_10-0.5*6)*s_4) - 
-                                           cf_10[5]*exp(-(t_10-0.5*5)*s_5) - cf_10[6]*exp(-(t_10-0.5*4)*s_6) - cf_10[7]*exp(-(t_10-0.5*3)*s_7) - cf_10[8]*exp(-(t_10-0.5*2)*s_8) - 
-                                           cf_10[9]*exp(-(t_10-0.5*1)*s_9) - cf_10[10]*exp(-(t_10)*x)
-s_10 = uniroot(sf_10,c(0,1))$root
-s_10
-
-t_11 = as.numeric(year_frac[i,11])
-sf_11 = function(x) as.numeric(dp[i,11]) - cf_11[1]*exp(-(t_11-0.5*10)*s_1) - cf_11[2]*exp(-(t_11-0.5*9)*s_2) - cf_11[3]*exp(-(t_11-0.5*8)*s_3) - cf_11[4]*exp(-(t_11-0.5*7)*s_4) - 
-                                           cf_11[5]*exp(-(t_11-0.5*6)*s_5) - cf_11[6]*exp(-(t_11-0.5*5)*s_6) - cf_11[7]*exp(-(t_11-0.5*4)*s_7) - cf_11[8]*exp(-(t_11-0.5*3)*s_8) - 
-                                           cf_11[9]*exp(-(t_11-0.5*2)*s_9) - cf_11[10]*exp(-(t_11-0.5*1)*s_9) - cf_11[11]*exp(-(t_11)*x)
-s_11 = uniroot(sf_11,c(0,1))$root
-s_11
-
-s = rbind(s_1, s_2, s_3, s_4, s_5, s_6, s_7, s_8, s_9, s_10, s_11)
-
-raw_spot_matrix[i,] <- s 
+  
+  t_1 = as.numeric(year_frac[i,1])
+  sf_1 = function(x) as.numeric(dp[i,1]) - cf_1[1]*(1+x/2)^(-2*t_1)
+  s_1 = uniroot(sf_1,c(0,1))$root
+  s_1
+  
+  t_2 = as.numeric(year_frac[i,2])
+  sf_2 = function(x) as.numeric(dp[i,2]) - cf_2[1]*(1+s_1/2)^(-2*(t_2-0.5*1))- cf_2[2]*(1+x/2)^(-2*t_2)
+  s_2 = uniroot(sf_2,c(0,1))$root
+  s_2
+  
+  t_3 = as.numeric(year_frac[i,3])
+  sf_3 = function(x) as.numeric(dp[i,3]) - cf_3[1]*(1+s_1/2)^(-2*(t_3-0.5*2)) - cf_3[2]*(1+s_2/2)^(-2*(t_3-0.5*1)) - cf_3[3]*(1+x/2)^(-2*t_3)
+  s_3 = uniroot(sf_3,c(0,1))$root
+  s_3
+  
+  t_4 = as.numeric(year_frac[i,4])
+  sf_4 = function(x) as.numeric(dp[i,4]) - cf_4[1]*(1+s_1/2)^(-2*(t_4-0.5*3)) - cf_4[2]*(1+s_2/2)^(-2*(t_4-0.5*2)) - cf_4[3]*(1+s_3/2)^(-2*(t_4-0.5*1)) - cf_4[4]*(1+x/2)^(-2*t_4)
+  s_4 = uniroot(sf_4,c(0,1))$root
+  s_4
+  
+  t_5 = as.numeric(year_frac[i,5])
+  sf_5 = function(x) as.numeric(dp[i,5]) - cf_5[1]*(1+s_1/2)^(-2*(t_5-0.5*4)) - cf_5[2]*(1+s_2/2)^(-2*(t_5-0.5*3)) - cf_5[3]*(1+s_3/2)^(-2*(t_5-0.5*2)) - cf_5[4]*(1+s_4/2)^(-2*(t_5-0.5*1)) - 
+    cf_5[5]*(1+x/2)^(-2*t_5)
+  s_5 = uniroot(sf_5,c(0,1))$root
+  s_5
+  
+  t_6 = as.numeric(year_frac[i,6])
+  sf_6 = function(x) as.numeric(dp[i,6]) - cf_6[1]*(1+s_1/2)^(-2*(t_6-0.5*4)) - cf_6[2]*(1+s_2/2)^(-2*(t_6-0.5*3)) - cf_6[3]*(1+s_3/2)^(-2*(t_6-0.5*2)) - cf_6[4]*(1+s_4/2)^(-2*(t_6-0.5*1)) - 
+    cf_6[5]*(1+x/2)^(-2*t_6)
+  s_6 = uniroot(sf_6,c(0,1))$root
+  s_6
+  
+  t_7 = as.numeric(year_frac[i,7])
+  sf_7 = function(x) as.numeric(dp[i,7]) - cf_7[1]*(1+s_1/2)^(-2*(t_7-0.5*6)) -  cf_7[2]*(1+s_2/2)^(-2*(t_7-0.5*5)) - cf_7[3]*(1+s_3/2)^(-2*(t_7-0.5*4)) - cf_7[4]*(1+s_4/2)^(-2*(t_7-0.5*3)) - 
+    cf_7[5]*(1+s_5/2)^(-2*(t_7-0.5*2)) - cf_7[6]*(1+s_6/2)^(-2*(t_7-0.5*1)) -  cf_7[7]*(1+x/2)^(-2*t_7)
+  s_7 = uniroot(sf_7,c(0,1))$root
+  s_7
+  
+  t_8 = as.numeric(year_frac[i,8])
+  sf_8 = function(x) as.numeric(dp[i,8]) - cf_8[1]*(1+s_1/2)^(-2*(t_8-0.5*7)) - cf_8[2]*(1+s_2/2)^(-2*(t_8-0.5*6)) - cf_8[3]* (1+s_3/2)^(-2*(t_8-0.5*5)) - cf_8[4]*(1+s_4/2)^(-2*(t_8-0.5*4)) - 
+    cf_8[5]*(1+s_5/2)^(-2*(t_8-0.5*3)) - cf_8[6]*(1+s_6/2)^(-2*(t_8-0.5*2)) - cf_8[7]*(1+s_7/2)^(-2*(t_8-0.5*1)) - cf_8[8]*(1+x/2)^(-2*t_8)
+  s_8 = uniroot(sf_8,c(0,1))$root
+  s_8
+  
+  t_9 = as.numeric(year_frac[i,9])
+  sf_9 = function(x) as.numeric(dp[i,9]) - cf_9[1]*(1+s_1/2)^(-2*(t_9-0.5*8)) - cf_9[2]*(1+s_2/2)^(-2*(t_9-0.5*7)) - cf_9[3]*(1+s_3/2)^(-2*(t_9-0.5*6)) - cf_9[4]*(1+s_4/2)^(-2*(t_9-0.5*5)) - 
+    cf_9[5]*(1+s_5/2)^(-2*(t_9-0.5*4)) - cf_9[6]*(1+s_6/2)^(-2*(t_9-0.5*3)) - cf_9[7]*(1+s_7/2)^(-2*(t_9-0.5*2)) - cf_9[8]*(1+s_8/2)^(-2*(t_9-0.5*1))  - 
+    cf_9[9]*(1+x/2)^(-2*t_9)
+  s_9 = uniroot(sf_9,c(0,1))$root
+  s_9
+  
+  t_10 = as.numeric(year_frac[i,10])
+  sf_10 = function(x) as.numeric(dp[i,10]) - cf_10[1]*(1+s_1/2)^(-2*(t_10-0.5*9)) - cf_10[2]*(1+s_2/2)^(-2*(t_10-0.5*8)) - cf_10[3]*(1+s_3/2)^(-2*(t_10-0.5*7)) - cf_10[4]*(1+s_4/2)^(-2*(t_10-0.5*6)) - 
+    cf_10[5]*(1+s_5/2)^(-2*(t_10-0.5*5)) -  cf_10[6]*(1+s_6/2)^(-2*(t_10-0.5*4)) - cf_10[7]*(1+s_7/2)^(-2*(t_10-0.5*3)) - cf_10[8]*(1+s_8/2)^(-2*(t_10-0.5*2)) - 
+    cf_10[9]*(1+s_9/2)^(-2*(t_10-0.5*1)) - cf_10[10]*(1+x/2)^(-2*t_10)
+  s_10 = uniroot(sf_10,c(0,1))$root
+  s_10
+  
+  t_11 = as.numeric(year_frac[i,11])
+  sf_11 = function(x) as.numeric(dp[i,11]) - cf_11[1]*(1+s_1/2)^(-2*(t_11-0.5*10)) - cf_11[2]*(1+s_2/2)^(-2*(t_11-0.5*9)) - cf_11[3]*(1+s_3/2)^(-2*(t_11-0.5*8)) - cf_11[4]*(1+s_4/2)^(-2*(t_11-0.5*7)) - 
+    cf_11[5]*(1+s_5/2)^(-2*(t_11-0.5*6)) - cf_11[6]*(1+s_6/2)^(-2*(t_11-0.5*5)) -  cf_11[7]*(1+s_7/2)^(-2*(t_11-0.5*4)) - cf_11[8]*(1+s_8/2)^(-2*(t_11-0.5*3)) - 
+    cf_11[9]*(1+s_9/2)^(-2*(t_11-0.5*2)) - cf_11[10]*(1+s_10/2)^(-2*(t_11-0.5*1)) - cf_11[11]*(1+x/2)^(-2*t_11)
+  s_11 = uniroot(sf_11,c(0,1))$root
+  s_11
+  
+  s = rbind(s_1, s_2, s_3, s_4, s_5, s_6, s_7, s_8, s_9, s_10, s_11)
+  raw_spot_matrix[i,] <- s 
 }
+
 
 # estimate spot rate by linear interpolation for bond4 and bond6, with maturity "2022-09-01" and "2023-09-01" respectively
 
@@ -210,10 +208,10 @@ est_spot_b6 <- c()
 
 for (j in 1:10){
 
-d_ratio_b4 <- (as.numeric(year_frac_md[j,4])-as.numeric(year_frac[j,3]))/(as.numeric(year_frac[j,5])-as.numeric(year_frac_md[j,3]))
+  d_ratio_b4 <- (as.numeric(year_frac_md[j,4])-as.numeric(year_frac[j,3]))/(as.numeric(year_frac[j,5])-as.numeric(year_frac_md[j,3]))
 est_spot_b4[j] = (as.numeric(raw_spot_matrix[j,5])-as.numeric(raw_spot_matrix[j,3]))*d_ratio_b4 + as.numeric(raw_spot_matrix[j,3])
 
-d_ratio_b6 <- (as.numeric(year_frac_md[j,6])-as.numeric(year_frac[j,5]))/(as.numeric(year_frac[j,7])-as.numeric(year_frac_md[j,5]))
+  d_ratio_b6 <- (as.numeric(year_frac_md[j,6])-as.numeric(year_frac[j,5]))/(as.numeric(year_frac[j,7])-as.numeric(year_frac_md[j,5]))
 est_spot_b6[j] = (as.numeric(raw_spot_matrix[j,7])-as.numeric(raw_spot_matrix[j,5]))*d_ratio_b6 + as.numeric(raw_spot_matrix[j,5])
 }
 
@@ -242,14 +240,14 @@ legend("topleft",pch=c(15,15),legend=c("2021-01-18", "2021-01-19", "2021-01-20",
 # estimate 5 years spot rate on 2021-01-18, 2022-01-18, 2023-01-18, 2024-01-18, 2025-01-18  by linear interpolation
 
 long_t <- c(yearFraction('2021-09-01','2022-03-01'), yearFraction('2022-09-01','2023-03-01'), yearFraction('2023-09-01','2024-03-01'),
-        yearFraction('2024-09-01','2025-03-01'), yearFraction('2025-09-01','2026-03-01'))
+            yearFraction('2024-09-01','2025-03-01'), yearFraction('2025-09-01','2026-03-01'))
 
-short_t <- c(yearFraction('2021-09-01','2022-01-18'), yearFraction('2022-09-01','2023-01-18'), yearFraction('2023-09-01','2024-01-18'),
-        yearFraction('2024-09-01','2025-01-18'), yearFraction('2025-09-01','2026-01-18'))
+short_t <- c(yearFraction('2021-09-01','2022-01-29'), yearFraction('2022-09-01','2023-01-29'), yearFraction('2023-09-01','2024-01-29'),
+             yearFraction('2024-09-01','2025-01-29'), yearFraction('2025-09-01','2026-01-29'))
 
-
-spot_md_sep_d1 <- c(spot_matrix_md[1,][2], spot_matrix_md[1,][4], spot_matrix_md[1,][6], spot_matrix_md[1,][8],spot_matrix_md[1,][10])
-spot_md_mar_d1 <- c(spot_matrix_md[1,][3], spot_matrix_md[1,][5], spot_matrix_md[1,][7], spot_matrix_md[1,][9],spot_matrix_md[1,][11])
+a=10
+spot_md_sep_d1 <- c(spot_matrix_md[a,][2], spot_matrix_md[a,][4], spot_matrix_md[a,][6], spot_matrix_md[a,][8],spot_matrix_md[a,][10])
+spot_md_mar_d1 <- c(spot_matrix_md[a,][3], spot_matrix_md[a,][5], spot_matrix_md[a,][7], spot_matrix_md[a,][9],spot_matrix_md[a,][11])
 
 est_spot_d1 <- c()
 
@@ -258,18 +256,19 @@ for(i in c(1:5)){
 }
 est_spot_d1
 
-est_spot_d1 <- c(0.001059623, 0.001847742, 0.002479806, 0.003580868, 0.004774925)
-est_spot_d2 <- c(0.001114239, 0.001840950, 0.002463243, 0.003570954, 0.004799939)
-est_spot_d3 <- c(0.001276439, 0.002010172, 0.002579120, 0.003603026, 0.004829274)
-est_spot_d4 <- c(0.001333635, 0.002044944, 0.002624738, 0.003789126, 0.005028465)
-est_spot_d5 <- c(0.001286601, 0.001975962, 0.002545488, 0.003698312, 0.004930812)
-est_spot_d6 <- c(0.001426167, 0.002069591, 0.002653105, 0.003501533, 0.004691368)
-est_spot_d7 <- c(0.001414144, 0.002052852, 0.002460621, 0.003575989, 0.004729216)
-est_spot_d8 <- c(0.001222542, 0.001890419, 0.002316010, 0.003403985, 0.004533464)
-est_spot_d9 <- c(0.001240898, 0.001829523, 0.002383541, 0.003542084, 0.004680266)
-est_spot_d10 <- c(0.001227882, 0.001899088, 0.002404033, 0.003618897, 0.004774593)
+est_spot_d1 <- c(0.001060246, 0.001850573, 0.002485975, 0.003586256, 0.004780742)
+est_spot_d2 <- c(0.001114392, 0.001843733, 0.002469326, 0.003576229, 0.004805797)
+est_spot_d3 <- c(0.001277369, 0.002013494, 0.002585780, 0.003608399, 0.004835185)
+est_spot_d4 <- c(0.001334650, 0.002048354, 0.002631623, 0.003794378, 0.005034957)
+est_spot_d5 <- c(0.001287526, 0.001979152, 0.002551964, 0.003703785, 0.004937044)
+est_spot_d6 <- c(0.001427309, 0.002073065, 0.002605196, 0.003506598, 0.004696981)
+est_spot_d7 <- c(0.001415268, 0.002056269, 0.002466645, 0.003580921, 0.004734850)
+est_spot_d8 <- c(0.001223382, 0.001893326, 0.002321359, 0.003408388, 0.004538594)
+est_spot_d9 <- c(0.001241752, 0.001832237, 0.002389220, 0.003546891, 0.004685744)
+est_spot_d10 <- c(0.001228716, 0.001902015, 0.002409793, 0.003623796, 0.004780374)
 
 est_spot_5years <- rbind(est_spot_d1, est_spot_d2, est_spot_d3, est_spot_d4, est_spot_d5, est_spot_d6, est_spot_d7, est_spot_d8, est_spot_d9, est_spot_d10)
+
 
 
 # calculate 4 years forward rate 1y1y, 1y2y, 1y3y, 1y4y 
@@ -278,13 +277,14 @@ fwd_matrix = matrix(nrow = 10, ncol = 4)
 
 for(j in c(1:10)){
   for(i in c(1:4)){
-    fwd_matrix[j,i] <- (est_spot_5years[j,i+1]*(i+1) - est_spot_5years[j,1]*1) / ((i+1) - 1)
+    ff = function(x) ((1+est_spot_5years[j,1]/2)^2)*((1+x/2)^(2*i)) - (1+est_spot_5years[j,i+1])^(2*(i+1))
+    fwd_matrix[j,i] <- uniroot(ff,c(0,1))$root
   }
 }
 
 # plot forward curve
 year <- c(2,3,4,5)
-plot(year,fwd_matrix[1, ], type = "o", main = 'Forward Curve', col = "black", xlab = "Year", ylab = "Forward Rate", ylim = c(0.0020,0.0060),lwd=0.8)
+plot(year,fwd_matrix[1, ], type = "o", main = 'Forward Curve', col = "black", xlab = "Year", ylab = "Forward Rate", ylim = c(0.005,0.015),lwd=0.8)
 colour = c("red","orange","yellow","sienna","light blue","purple","powderblue","blueviolet", "yellowgreen")
 for (i in c(2:10)){ 
   lines(year, fwd_matrix[i,], type = "o", col=colour[i-1],lwd=0.8)
@@ -294,6 +294,7 @@ for (i in c(2:10)){
 
 legend("topleft",pch=c(15,15),legend=c("2021-01-18", "2021-01-19", "2021-01-20", "2021-01-21" ,"2021-01-22","2021-01-25","2021-01-26","2021-01-27","2021-01-28","2021-01-29"),
        col=c(1,2,3,4,5,6,7,8,9,10),lty=1.3,cex=0.6)
+
 
 
 
