@@ -17,7 +17,7 @@ ytm_matrix = matrix('numeric', nrow = 10, ncol = 11)
 for(j in c(1:11)){
   close_price = close_price_matrix[,j]
   for(i in c(1:10)){
-    ytm_matrix[i,j] <- bond.yield(settle = close_price_date[i], mature = maturity_date[j], coupon = coupon_payment[j], freq = 2, close_price[i], convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"), comp.freq = Inf, redemption_value = 100)
+    ytm_matrix[i,j] <- bond.yield(settle = close_price_date[i], mature = maturity_date[j], coupon = coupon_payment[j], freq = 2, close_price[i], convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"), comp.freq = 2, redemption_value = 100)
   }
 }
 
@@ -30,7 +30,7 @@ for(i in c(1:10)){
 }}
 
 # plot ytm curve
-year<-c(0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5) 
+year<-c(0,0.5,1,year_frac[1,4]-year_frac[1,1],2,year_frac[1,6]-year_frac[1,1],3,3.5,4,4.5,5)  
 plot(year,ytm_matrix[1, ], type = "o", main = 'YTM Curve', col = "black", xlab = "Year", ylab = "YTM", ylim = c(0.0003,0.0055),lwd=1.0)
 colour = c("red","orange","yellow","sienna","light blue","purple","powderblue","blueviolet", "yellowgreen")
 for (i in c(2:10)){ 
@@ -134,67 +134,56 @@ for (i in 1:10) {
   t_1 = as.numeric(year_frac[i,1])
   sf_1 = function(x) as.numeric(dp[i,1]) - cf_1[1]*(1+x/2)^(-2*t_1)
   s_1 = uniroot(sf_1,c(0,1))$root
-  s_1
   
   t_2 = as.numeric(year_frac[i,2])
   sf_2 = function(x) as.numeric(dp[i,2]) - cf_2[1]*(1+s_1/2)^(-2*(t_2-0.5*1))- cf_2[2]*(1+x/2)^(-2*t_2)
   s_2 = uniroot(sf_2,c(0,1))$root
-  s_2
   
   t_3 = as.numeric(year_frac[i,3])
   sf_3 = function(x) as.numeric(dp[i,3]) - cf_3[1]*(1+s_1/2)^(-2*(t_3-0.5*2)) - cf_3[2]*(1+s_2/2)^(-2*(t_3-0.5*1)) - cf_3[3]*(1+x/2)^(-2*t_3)
   s_3 = uniroot(sf_3,c(0,1))$root
-  s_3
   
   t_4 = as.numeric(year_frac[i,4])
   sf_4 = function(x) as.numeric(dp[i,4]) - cf_4[1]*(1+s_1/2)^(-2*(t_4-0.5*3)) - cf_4[2]*(1+s_2/2)^(-2*(t_4-0.5*2)) - cf_4[3]*(1+s_3/2)^(-2*(t_4-0.5*1)) - cf_4[4]*(1+x/2)^(-2*t_4)
   s_4 = uniroot(sf_4,c(0,1))$root
-  s_4
   
   t_5 = as.numeric(year_frac[i,5])
   sf_5 = function(x) as.numeric(dp[i,5]) - cf_5[1]*(1+s_1/2)^(-2*(t_5-0.5*4)) - cf_5[2]*(1+s_2/2)^(-2*(t_5-0.5*3)) - cf_5[3]*(1+s_3/2)^(-2*(t_5-0.5*2)) - cf_5[4]*(1+s_4/2)^(-2*(t_5-0.5*1)) - 
     cf_5[5]*(1+x/2)^(-2*t_5)
   s_5 = uniroot(sf_5,c(0,1))$root
-  s_5
   
   t_6 = as.numeric(year_frac[i,6])
   sf_6 = function(x) as.numeric(dp[i,6]) - cf_6[1]*(1+s_1/2)^(-2*(t_6-0.5*4)) - cf_6[2]*(1+s_2/2)^(-2*(t_6-0.5*3)) - cf_6[3]*(1+s_3/2)^(-2*(t_6-0.5*2)) - cf_6[4]*(1+s_4/2)^(-2*(t_6-0.5*1)) - 
     cf_6[5]*(1+x/2)^(-2*t_6)
   s_6 = uniroot(sf_6,c(0,1))$root
-  s_6
   
   t_7 = as.numeric(year_frac[i,7])
   sf_7 = function(x) as.numeric(dp[i,7]) - cf_7[1]*(1+s_1/2)^(-2*(t_7-0.5*6)) -  cf_7[2]*(1+s_2/2)^(-2*(t_7-0.5*5)) - cf_7[3]*(1+s_3/2)^(-2*(t_7-0.5*4)) - cf_7[4]*(1+s_4/2)^(-2*(t_7-0.5*3)) - 
     cf_7[5]*(1+s_5/2)^(-2*(t_7-0.5*2)) - cf_7[6]*(1+s_6/2)^(-2*(t_7-0.5*1)) -  cf_7[7]*(1+x/2)^(-2*t_7)
   s_7 = uniroot(sf_7,c(0,1))$root
-  s_7
   
   t_8 = as.numeric(year_frac[i,8])
   sf_8 = function(x) as.numeric(dp[i,8]) - cf_8[1]*(1+s_1/2)^(-2*(t_8-0.5*7)) - cf_8[2]*(1+s_2/2)^(-2*(t_8-0.5*6)) - cf_8[3]* (1+s_3/2)^(-2*(t_8-0.5*5)) - cf_8[4]*(1+s_4/2)^(-2*(t_8-0.5*4)) - 
     cf_8[5]*(1+s_5/2)^(-2*(t_8-0.5*3)) - cf_8[6]*(1+s_6/2)^(-2*(t_8-0.5*2)) - cf_8[7]*(1+s_7/2)^(-2*(t_8-0.5*1)) - cf_8[8]*(1+x/2)^(-2*t_8)
   s_8 = uniroot(sf_8,c(0,1))$root
-  s_8
   
   t_9 = as.numeric(year_frac[i,9])
   sf_9 = function(x) as.numeric(dp[i,9]) - cf_9[1]*(1+s_1/2)^(-2*(t_9-0.5*8)) - cf_9[2]*(1+s_2/2)^(-2*(t_9-0.5*7)) - cf_9[3]*(1+s_3/2)^(-2*(t_9-0.5*6)) - cf_9[4]*(1+s_4/2)^(-2*(t_9-0.5*5)) - 
     cf_9[5]*(1+s_5/2)^(-2*(t_9-0.5*4)) - cf_9[6]*(1+s_6/2)^(-2*(t_9-0.5*3)) - cf_9[7]*(1+s_7/2)^(-2*(t_9-0.5*2)) - cf_9[8]*(1+s_8/2)^(-2*(t_9-0.5*1))  - 
     cf_9[9]*(1+x/2)^(-2*t_9)
   s_9 = uniroot(sf_9,c(0,1))$root
-  s_9
   
   t_10 = as.numeric(year_frac[i,10])
   sf_10 = function(x) as.numeric(dp[i,10]) - cf_10[1]*(1+s_1/2)^(-2*(t_10-0.5*9)) - cf_10[2]*(1+s_2/2)^(-2*(t_10-0.5*8)) - cf_10[3]*(1+s_3/2)^(-2*(t_10-0.5*7)) - cf_10[4]*(1+s_4/2)^(-2*(t_10-0.5*6)) - 
     cf_10[5]*(1+s_5/2)^(-2*(t_10-0.5*5)) -  cf_10[6]*(1+s_6/2)^(-2*(t_10-0.5*4)) - cf_10[7]*(1+s_7/2)^(-2*(t_10-0.5*3)) - cf_10[8]*(1+s_8/2)^(-2*(t_10-0.5*2)) - 
     cf_10[9]*(1+s_9/2)^(-2*(t_10-0.5*1)) - cf_10[10]*(1+x/2)^(-2*t_10)
   s_10 = uniroot(sf_10,c(0,1))$root
-  s_10
   
   t_11 = as.numeric(year_frac[i,11])
   sf_11 = function(x) as.numeric(dp[i,11]) - cf_11[1]*(1+s_1/2)^(-2*(t_11-0.5*10)) - cf_11[2]*(1+s_2/2)^(-2*(t_11-0.5*9)) - cf_11[3]*(1+s_3/2)^(-2*(t_11-0.5*8)) - cf_11[4]*(1+s_4/2)^(-2*(t_11-0.5*7)) - 
     cf_11[5]*(1+s_5/2)^(-2*(t_11-0.5*6)) - cf_11[6]*(1+s_6/2)^(-2*(t_11-0.5*5)) -  cf_11[7]*(1+s_7/2)^(-2*(t_11-0.5*4)) - cf_11[8]*(1+s_8/2)^(-2*(t_11-0.5*3)) - 
     cf_11[9]*(1+s_9/2)^(-2*(t_11-0.5*2)) - cf_11[10]*(1+s_10/2)^(-2*(t_11-0.5*1)) - cf_11[11]*(1+x/2)^(-2*t_11)
   s_11 = uniroot(sf_11,c(0,1))$root
-  s_11
   
   s = rbind(s_1, s_2, s_3, s_4, s_5, s_6, s_7, s_8, s_9, s_10, s_11)
   raw_spot_matrix[i,] <- s 
@@ -296,8 +285,6 @@ legend("topleft",pch=c(15,15),legend=c("2021-01-18", "2021-01-19", "2021-01-20",
        col=c(1,2,3,4,5,6,7,8,9,10),lty=1.3,cex=0.6)
 
 
-
-
 ## Question 5 : cov matrix for ytm and forward rate
 
 ## (a) cov matrix for ytm
@@ -315,15 +302,6 @@ for (v in c(1:10)){
   exact_ytm_matrix[v,1] = est_spot_5years[v,1]
 
   for (i in c(2,3,4,5)) {
-  
-   # 2yr-ytm: 2023-01-18
-   # use bond: bond4: "2022-09-01", bond5: "2023-03-01" to estimate
-# est_ytm_d1[2] <- as.numeric(ytm_matrix_md[1,4]) + (as.numeric(ytm_matrix_md[1,5]) - as.numeric(ytm_matrix_md[1,4])) * short_t[2] / long_t[2]
-
-   # 3yr-ytm: 2024-01-18
-   # use bond: bond6: "2023-09-01", bond7: "2024-03-01" to estimate
-# est_ytm_d1[3] <- as.numeric(ytm_matrix_md[1,6]) + (as.numeric(ytm_matrix_md[1,7]) - as.numeric(ytm_matrix_md[1,6])) * short_t[3] / long_t[3]
-
     exact_ytm_matrix[v,i] <- as.numeric(ytm_matrix_md[v,i*2]) + (as.numeric(ytm_matrix_md[v,(i*2)+1]) - as.numeric(ytm_matrix_md[v,i*2])) * short_t[i] / long_t[i]
   }
 }
@@ -368,4 +346,3 @@ print(fwd_cov)
 # eigenvalues and eigenvectors for fwd cov matrix
 print(eigen(fwd_cov)$values)
 print(eigen(fwd_cov)$vectors)
-
