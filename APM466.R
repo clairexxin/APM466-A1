@@ -264,7 +264,7 @@ fwd_matrix = matrix(nrow = 10, ncol = 4)
 
 for(j in c(1:10)){
   for(i in c(1:4)){
-    ff = function(x) ((1+est_spot_5years[j,1]/2)^2)*((1+x/2)^(2*i)) - (1+est_spot_5years[j,i+1])^(2*(i+1))
+    ff = function(x) ((1+est_spot_5years[j,1]/2)^2)*((1+x/2)^(2*i)) - (1+est_spot_5years[j,i+1]/2)^(2*(i+1))
     fwd_matrix[j,i] <- uniroot(ff,c(0,1))$root
   }
 }
