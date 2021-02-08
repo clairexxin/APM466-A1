@@ -44,7 +44,6 @@ legend("topleft",pch=c(15,15),legend=c("2021-01-18", "2021-01-19", "2021-01-20",
                 col=c(1,2,3,4,5,6,7,8,9,10), lty=1.3, cex=0.6)
 
 
-
 # linear interpolation on ytm for "2022-09-01"and "2023-09-01"
 
 est_maturity <- c("2022-03-01", "2022-09-01", "2023-03-01", "2023-09-01","2024-03-01")
@@ -259,7 +258,6 @@ est_spot_d10 <- c(0.001228716, 0.001902015, 0.002409793, 0.003623796, 0.00478037
 est_spot_5years <- rbind(est_spot_d1, est_spot_d2, est_spot_d3, est_spot_d4, est_spot_d5, est_spot_d6, est_spot_d7, est_spot_d8, est_spot_d9, est_spot_d10)
 
 
-
 # calculate 4 years forward rate 1y1y, 1y2y, 1y3y, 1y4y 
 
 fwd_matrix = matrix(nrow = 10, ncol = 4)
@@ -280,7 +278,6 @@ for (i in c(2:10)){
 }
 
 # Add a legend to the plot
-
 legend("topleft",pch=c(15,15),legend=c("2021-01-18", "2021-01-19", "2021-01-20", "2021-01-21" ,"2021-01-22","2021-01-25","2021-01-26","2021-01-27","2021-01-28","2021-01-29"),
        col=c(1,2,3,4,5,6,7,8,9,10),lty=1.3,cex=0.6)
 
@@ -290,11 +287,6 @@ legend("topleft",pch=c(15,15),legend=c("2021-01-18", "2021-01-19", "2021-01-20",
 ## (a) cov matrix for ytm
 
 # calculate YTM for 5 years by the liner interpolation
-
-# useful dataset
-ytm_matrix_md
-maturity_date_md
-est_spot_5years
 
 exact_ytm_matrix = matrix(nrow = 10, ncol = 5)
 
